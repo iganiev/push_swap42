@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iganiev <iganiev@student.42.fr>            +#+  +:+       +#+         #
+#    By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/27 12:39:00 by iganiev           #+#    #+#              #
-#    Updated: 2023/07/04 20:03:38 by iganiev          ###   ########.fr        #
+#    Updated: 2023/07/14 08:44:20 by iganiev          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 SRC = 	push_swap.c stack_a_op.c utils.c stack_op.c stack_b_op.c stack_ab_op.c \
-		sorting_algorithm.c sorting_utils.c \
+		sorting_algorithm.c sorting_utils.c parsing.c\
 
 OBJ = $(SRC:.c=.o)
 

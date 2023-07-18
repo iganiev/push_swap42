@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iganiev <iganiev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:53:42 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/04 22:57:57 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:38:17 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	find_smallest_elem_pos(t_stack *data)
 	return (smallest_pos);
 }
 
-int	check_elem(t_stack *stack, int pos)
+int	check_elem_pos(t_stack *stack, int pos)
 {
 	int	stack_size;
 
@@ -57,7 +57,7 @@ void	push_smallest_to_b(t_stack **stack_a, t_stack **stack_b)
 
 	len_a = stack_len(*stack_a);
 	elem_pos = find_smallest_elem_pos(*stack_a);
-	move_elem = check_elem(*stack_a, elem_pos);
+	move_elem = check_elem_pos(*stack_a, elem_pos);
 	if (move_elem == 1)
 	{
 		elem_pos = elem_pos - 1;

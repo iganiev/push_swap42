@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iganiev <iganiev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:06:13 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/04 23:06:32 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/18 23:14:45 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ t_stack	*ft_newlst(int content)
 int	stack_len(t_stack *stack)
 {
 	int	len;
+	t_stack	*temp;
 
 	len = 0;
-	while (stack)
+	temp = stack;
+	while (temp)
 	{
 		len++;
-		stack = stack->next;
+		temp = temp->next;
 	}
 	return (len);
 }
@@ -69,4 +71,35 @@ void	print_stack(t_stack *data)
 		data = data->next;
 	}
 	ft_printf("\n");
+}
+
+int	ft_isspace(const int c)
+{
+	return (c == ' ' || c == '\n' || c == '\t'
+		|| c == '\v' || c == '\f' || c == '\r');
+}
+
+void	ft_free(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+	// array = NULL;
+}
+
+void	free_stack(t_stack *top)
+{
+    t_stack	*temp;
+    while (top != NULL)
+	{
+        temp = top;
+        top = top->next;
+        free(temp);
+    }
 }
