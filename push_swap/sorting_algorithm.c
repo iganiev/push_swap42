@@ -6,7 +6,7 @@
 /*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 12:52:29 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/19 01:51:39 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:55:13 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	quick_sort(t_stack **stack_a, t_stack **stack_b)
 	{
 		i = 0;
 		pivot = find_median(*stack_a, len_a);
-		// printf("pivot == %d\n", pivot);
 		while (i < len_a / 2 - 1)
 		{
 			if ((*stack_a)->content < pivot)
@@ -162,14 +161,6 @@ void	quick_sort(t_stack **stack_a, t_stack **stack_b)
 		quick_sort(stack_a, stack_b);
 	}
 }
-
-// void	sort_a(t_stack **stack_a)
-// {
-// 	while (!is_sorted(*stack_a))
-// 	{
-// 		ra(stack_a);
-// 	}
-// }
 
 void sort_a(t_stack **stack_a)
 {
@@ -195,7 +186,6 @@ void sort_a(t_stack **stack_a)
 }
 
 
-
 void	get_target_pos(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack *temp_a = *stack_a;
@@ -217,36 +207,139 @@ void	get_target_pos(t_stack **stack_a, t_stack **stack_b)
     }
 }
 
+// int count_moves_in_a(t_stack *stack, int target)
+// {
+// 	// t_stack *tmp = stack;
+//     int rotations = 0;
+//     while (stack != NULL)
+//     {
+// 		// printf("stack === %d\n", stack->content);
+// 		// printf("target === %d\n", target);
+//         if (stack->content == target)
+//             break ;
+//         stack = stack->next;
+//         rotations++;
+//     }
+// 	// printf("Stack12 === %d\n", stack->content);
+// 	// printf("rotat=== %d\n", target);
+// 	// if(rotations == 0 || stack == NULL)
+// 	// 	return 0;
+//     if (rotations > stack_len(stack) / 2)
+//         rotations = stack_len(stack) - rotations;
+//     return (rotations);
+// }
+
 int count_moves_in_a(t_stack *stack, int target)
 {
+    t_stack *tmp = stack;
     int rotations = 0;
-    while (stack != NULL)
+    int target_index = -1;
+    int current_index = 0;
+
+    while (tmp != NULL)
     {
-        if (stack->content == target)
+        if (tmp->content == target)
+        {
+            target_index = current_index;
             break;
-        stack = stack->next;
-        rotations++;
+        }
+        tmp = tmp->next;
+        current_index++;
     }
-    if (rotations > stack_len(stack) / 2)
-        rotations = stack_len(stack) - rotations;
-    return (rotations);
+    if (target_index >= 0)
+    {
+        rotations = target_index;
+        if (rotations > stack_len(stack) / 2)
+            rotations = rotations - stack_len(stack);
+    }
+    return rotations;
 }
+
+
+// t_stack	*find_node_from_stk(t_stack *stk, int val)
+// {
+// 	t_stack	*tmp;
+
+// 	tmp = stk;
+// 	while (tmp != NULL)
+// 	{
+// 		if (tmp->content == val)
+// 			return (tmp);
+// 		tmp = tmp->next;
+// 	}
+// 	return (NULL);
+// }
+
+// int count_moves_in_a(t_stack *stack, int target)
+// {	
+//     while (stack != NULL)
+//     {
+// 		// printf("stack === %d\n", stack->content);
+// 		// printf("target === %d\n", target);
+//         if (stack->content == target)
+//             break ;
+//         stack = stack->next;
+//         rotations++;
+//     }
+// 	printf("Stack12 === %d\n", stack->content);
+// 	printf("rotat=== %d\n", target);
+// 	if(rotations == 0 || stack == NULL)
+// 		return 0;
+//     if (rotations > stack_len(stack) / 2)
+//         rotations = stack_len(stack) - rotations;
+//     return (rotations);
+// }
+
+// int count_moves_in_b(t_stack *stack, int element)
+// {
+// 	// t_stack *temp = stack;
+//     int moves = 0;
+//     while (temp != NULL)
+//     {
+//         if (stack->content == element)
+//             break;
+//         stack = stack->next;
+//         moves++;
+//     }
+//     if (moves > stack_len(stack) / 2)
+//         moves = stack_len(stack) - moves;
+//     return moves;
+// }
 
 int count_moves_in_b(t_stack *stack, int element)
 {
+    t_stack *temp = stack;
     int moves = 0;
-    while (stack != NULL)
+    int element_index = -1;
+    int current_index = 0;
+
+    while (temp != NULL)
     {
-        if (stack->content == element)
+        if (temp->content == element)
+        {
+            element_index = current_index;
             break;
-        stack = stack->next;
-        moves++;
+        }
+        temp = temp->next;
+        current_index++;
     }
-    if (moves > stack_len(stack) / 2)
-        moves = stack_len(stack) - moves;
-    return moves;
+
+    if (element_index >= 0)
+    {
+        moves = element_index;
+        if (moves > stack_len(stack) / 2)
+            moves = moves - stack_len(stack);
+    }
+    return (moves);
 }
 
+
+int	ft_abs(int value)
+{
+	if (value < 0)
+		value *= -1;
+	return (value);
+}
 
 void get_price(t_stack **stack_a, t_stack **stack_b)
 {
@@ -255,15 +348,29 @@ void get_price(t_stack **stack_a, t_stack **stack_b)
 
     while (temp_b != NULL)
     {
-        int moves_a = count_moves_in_a(temp_a, temp_b->content);
-        int moves_b = count_moves_in_b(temp_b, temp_b->content);
+        int moves_a = count_moves_in_a(*stack_a, temp_b->target);
+        int moves_b = count_moves_in_b(*stack_b, temp_b->content);
 		// printf("moves_a === %d\n", moves_a);
 		// printf("moves_B === %d\n", moves_b);
-        temp_b->price = (moves_a) + (moves_b);
+        temp_b->price = (ft_abs(moves_a) + ft_abs(moves_b));
+		// if(temp_b->price < 0)
+		// 	temp_b->price *= -1;
+		
+		temp_b->cost_a = moves_a;
+		temp_b->cost_b = moves_b;
+		// printf("content === %d\n", temp_b->content);
+		// // printf("target === %d\n", temp_b->target);
+		// printf("moves_a === %d\n", moves_a);
+		// printf("moves_B === %d\n", moves_b);
+		// printf("price === %d\n", temp_b->price);
 		if (temp_a != NULL)
         	temp_a = temp_a->next;
         temp_b = temp_b->next;
     }
+	// print_stack(*stack_a);
+	// print_stack(*stack_b);
+	
+	// exit(0);
 }
 
 t_stack *find_lowest_price(t_stack *stack_b)
@@ -273,8 +380,12 @@ t_stack *find_lowest_price(t_stack *stack_b)
 
     while (temp != NULL)
     {
+		// printf("lowwest :%d\n", lowest->price);
+		// printf("tmp->:%d\n", temp->price);
         if (temp->price < lowest->price)
+		{
             lowest = temp;
+		}
         temp = temp->next;
     }
     return (lowest);
@@ -310,70 +421,103 @@ t_stack *get_stack_top(t_stack *stack)
     return (stack);
 }
 
-t_stack	*find_node_from_stk(t_stack *stk, int val)
-{
-	t_stack	*tmp;
+// t_stack	*find_node_from_stk(t_stack *stk, int val)
+// {
+// 	t_stack	*tmp;
 
-	tmp = stk;
-	while (tmp != NULL)
+// 	tmp = stk;
+// 	while (tmp != NULL)
+// 	{
+// 		if (tmp->content == val)
+// 			return (tmp);
+// 		tmp = tmp->next;
+// 	}
+// 	return (NULL);
+// }
+
+void move_to_top(t_stack **stack_a, t_stack **stack_b, t_stack *lowest_price_element)
+{
+	// printf("cont: %d\n", lowest_price_element->content);
+	// printf("cosT_a: %d\n", lowest_price_element->cost_a);
+	// printf("cost_b: %d\n", lowest_price_element->cost_b);
+	
+	if (lowest_price_element->cost_b > 0)
 	{
-		if (tmp->content == val)
-			return (tmp);
-		tmp = tmp->next;
+		while (lowest_price_element->cost_b != 0)
+		{
+			rb(stack_b);
+			lowest_price_element->cost_b--;
+		}
 	}
-	return (NULL);
+	else if(lowest_price_element->cost_b < 0)
+	{
+		while (lowest_price_element->cost_b != 0)
+		{
+			rrb(stack_b);
+			lowest_price_element->cost_b++;
+		}
+	}
+	
+	if(lowest_price_element->cost_a > 0)
+	{
+		while (lowest_price_element->cost_a != 0)
+		{
+			ra(stack_a);
+			lowest_price_element->cost_a--;
+		}
+	}
+	else if(lowest_price_element->cost_a < 0)
+	{
+		while (lowest_price_element->cost_a != 0)
+		{
+			rra(stack_a);
+			lowest_price_element->cost_a++;
+		}
+	}
+	// pa(stack_a, stack_b);
+    // while (*stack_b != lowest_price_element)
+    // {
+    //     if (lowest_price_element->index <= stack_len(*stack_b) / 2)
+    //         rb(stack_b);
+    //     else
+    //         rrb(stack_b);
+    // }
+	// target = find_node_from_stk(*stack_a, lowest_price_element->target);
+	// if (target->index >= stack_len(*stack_a) / 2)
+	// 	num_of_rotations = stack_len(*stack_a) - target->index;
+	// else
+	// 	num_of_rotations = target->index;
+    // while (num_of_rotations-- != 0)
+    // {
+	// 	if (target->index >= stack_len(*stack_a) / 2)
+    //         rra(stack_a);
+    //     else
+    //         ra(stack_a);
+    // }
 }
 
 // void move_to_top(t_stack **stack_a, t_stack **stack_b, t_stack *lowest_price_element)
 // {
-// 	// t_stack	*temp_b;
-// 	// static int i;
 // 	t_stack	*target;
 // 	int		num_of_rotations;
 
-//     while (*stack_b != lowest_price_element)
-//     {
-//         if (lowest_price_element->index <= stack_len(*stack_b) / 2)
-//             rb(stack_b);
-//         else
-//             rrb(stack_b);
-//     }
 // 	target = find_node_from_stk(*stack_a, lowest_price_element->target);
 // 	if (target->index >= stack_len(*stack_a) / 2)
 // 		num_of_rotations = stack_len(*stack_a) - target->index;
 // 	else
 // 		num_of_rotations = target->index;
-//     while (num_of_rotations-- != 0)
+//     while (*stack_b != lowest_price_element && num_of_rotations-- != 0)
 //     {
+//         if (lowest_price_element->index <= stack_len(*stack_b) / 2)
+//             rb(stack_b);
+//         else
+//             rrb(stack_b);
 // 		if (target->index >= stack_len(*stack_a) / 2)
 //             rra(stack_a);
 //         else
 //             ra(stack_a);
 //     }
 // }
-
-void move_to_top(t_stack **stack_a, t_stack **stack_b, t_stack *lowest_price_element)
-{
-	t_stack	*target;
-	int		num_of_rotations;
-
-	target = find_node_from_stk(*stack_a, lowest_price_element->target);
-	if (target->index >= stack_len(*stack_a) / 2)
-		num_of_rotations = stack_len(*stack_a) - target->index;
-	else
-		num_of_rotations = target->index;
-    while (*stack_b != lowest_price_element && num_of_rotations-- != 0)
-    {
-        if (lowest_price_element->index <= stack_len(*stack_b) / 2)
-            rb(stack_b);
-        else
-            rrb(stack_b);
-		if (target->index >= stack_len(*stack_a) / 2)
-            rra(stack_a);
-        else
-            ra(stack_a);
-    }
-}
 
 
 
@@ -388,6 +532,11 @@ void	move_to_a(t_stack **stack_a, t_stack **stack_b)
 		get_target_pos(stack_a, stack_b);
 		get_price(stack_a, stack_b);
 		lowest_price = find_lowest_price(*stack_b);
+		// printf("lowest == %d\n", lowest_price->content);
+		// exit(0);
+		// printf("mv_A == %d\n", lowest_price->cost_a);
+		// printf("mv_b == %d\n", lowest_price->cost_b);
+		// printf("price == %d\n", lowest_price->price);
 		move_to_top(stack_a, stack_b, lowest_price);
 		pa(stack_a, stack_b);
 	}
@@ -400,353 +549,3 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b)
 	move_to_a(stack_a, stack_b);
 	sort_a(stack_a);
 }
-
-
-
-// int	find_median(t_stack *stack)
-// {
-// 	int	i;
-// 	int	sum;
-
-// 	i = 0;
-// 	sum = 0;
-// 	while (stack)
-// 	{
-// 		sum += stack->sort_index;
-// 		i++;
-// 		if (stack->next == NULL) {
-//             break; // Exit the loop if it reaches the end of the list
-//         }
-// 		stack = stack->next;
-// 	}
-// 	if (sum % i == 0)
-// 		return (sum / i);
-// 	else
-// 		return ((sum / i) + 1);
-// }
-
-// void move_to_b(t_stack **stack_a, t_stack **stack_b, int *elems_to_move)
-// {
-//     int median;
-//     int i;
-
-//     median = find_median(*stack_a);
-//     i = ((*elems_to_move) / 2) + 1;
-//     while (i > 0)
-//     {
-//         if ((*stack_a)->content < median)
-//             pb(stack_a, stack_b);
-//         else if ((*stack_a)->next->content < median)
-//         {
-//             ra(stack_a);
-//             pb(stack_a, stack_b);
-//         }
-//         else if (lst_last(*stack_a) < median)
-//         {
-//             rra(stack_a);
-//             pb(stack_a, stack_b);
-//         }
-//         else
-//             ra(stack_a);
-//         i--;
-//         (*elems_to_move)--;
-//     }
-// }
-
-// void move_to_b_by_median(t_stack **stack_a, t_stack **stack_b)
-// {
-//     int elems_to_move;
-
-//     elems_to_move = stack_len(*stack_a) - 3;
-//     while (elems_to_move > 0)
-//         move_to_b(stack_a, stack_b, &elems_to_move);
-// }
-
-
-// void	assign_elem_position(t_stack **stack_a, t_stack **stack_b)
-// {
-// 	int		i;
-// 	t_stack	*temp_a;
-// 	t_stack	*temp_b;
-
-// 	i = 0;
-// 	temp_a = *stack_a;
-// 	temp_b = *stack_b;
-// 	while (temp_a)
-// 	{
-// 		temp_a->current_pos = i++;
-// 		temp_a = temp_a->next;
-// 	}
-// 	i = 0;
-// 	while (temp_b)
-// 	{
-// 		temp_b->current_pos = i++;
-// 		temp_b = temp_b->next;
-// 	}
-// }
-
-// void	assign_index(int len, t_stack **stack, int *sorted_list)
-// {
-// 	int		i;
-// 	t_stack	*temp;
-
-// 	temp = *stack;
-// 	while (temp)
-// 	{
-// 		i = 0;
-// 		while (i < len)
-// 		{
-// 			if (temp->data == sorted_list[i])
-// 			{
-// 				temp->sort_index = i;
-// 				break ;
-// 			}
-// 			i++;
-// 		}
-// 		temp = temp->next;
-// 	}
-// }
-
-// void	put_sorting_index(t_stack **stack)
-// {
-// 	int		len;
-// 	t_stack	*temp;
-// 	int		i;
-// 	int		*sorted_list;
-
-// 	temp = *stack;
-// 	len = stack_len(*stack);
-// 	sorted_list = malloc(sizeof(int) * len);
-// 	if (!sorted_list)
-// 		return ;
-// 	i = 0;
-// 	while (temp)
-// 	{
-// 		sorted_list[i++] = temp->data;
-// 		temp = temp->next;
-// 	}
-// 	sort_int_array(&sorted_list, len);
-// 	temp = *stack;
-// 	assign_index(len, &temp, sorted_list);
-// 	*stack = temp;
-// 	free(sorted_list);
-// }
-
-// int	count_forward_moves(t_stack *stack, int target_pos)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (stack->sort_index != target_pos)
-// 	{
-// 		i++;
-// 		stack = stack->next;
-// 	}
-// 	return (i);
-// }
-
-// int	count_backward_moves(t_stack *stack, int target_pos)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (stack->sort_index != target_pos)
-// 		stack = stack->next;
-// 	stack = stack->next;
-// 	while (stack)
-// 	{
-// 		i++;
-// 		stack = stack->next;
-// 	}
-// 	return (i + 1);
-// }
-
-// int	find_cheapest(t_stack **stack_b)
-// {
-// 	int		cheapest;
-// 	t_stack	*temp;
-// 	int		cost_a;
-// 	int		cost_b;
-// 	int		cheapest_pos;
-
-// 	temp = *stack_b;
-// 	cheapest = INT_MAX;
-// 	while (temp)
-// 	{
-// 		cost_a = temp->cost_a;
-// 		if (cost_a < 0)
-// 			cost_a = temp->cost_a * -1;
-// 		cost_b = temp->cost_b;
-// 		if (cost_b < 0)
-// 			cost_b = temp->cost_b * -1;
-// 		if (cheapest > (cost_a + cost_b))
-// 		{
-// 			cheapest = (cost_a + cost_b);
-// 			cheapest_pos = temp->current_pos;
-// 		}
-// 		temp = temp->next;
-// 	}
-// 	return (cheapest_pos);
-// }
-
-// void	find_min_and_max(int *a_min, int *a_max, t_stack *temp)
-// {
-// 	*a_min = temp->sort_index;
-// 	*a_max = temp->sort_index;
-// 	while (temp->next != NULL)
-// 	{
-// 		if (*a_min > temp->next->sort_index)
-// 			*a_min = temp->next->sort_index;
-// 		if (*a_max < temp->next->sort_index)
-// 			*a_max = temp->next->sort_index;
-// 		temp = temp->next;
-// 	}
-// }
-
-// void	check_min_and_max_diff(int *min_pos_diff, int *max_diff,
-// 									t_stack **a, t_stack **b)
-// {
-// 	t_stack	*temp_a;
-// 	int		next_diff;
-
-// 	temp_a = *a;
-// 	*max_diff = temp_a->sort_index - (*b)->sort_index;
-// 	*min_pos_diff = 1000;
-// 	if ((temp_a->sort_index - (*b)->sort_index) > 0)
-// 		*min_pos_diff = (temp_a->sort_index - (*b)->sort_index);
-// 	while (temp_a->next)
-// 	{
-// 		next_diff = temp_a->next->sort_index - (*b)->sort_index;
-// 		if (*max_diff < next_diff)
-// 			*max_diff = next_diff;
-// 		if (next_diff > 0 && *min_pos_diff > next_diff)
-// 			*min_pos_diff = next_diff;
-// 		temp_a = temp_a->next;
-// 	}
-// }
-
-// int	get_target_pos(t_stack **stack_a, t_stack **stack_b)
-// {
-// 	int		min_pos_diff;
-// 	int		max_diff;
-// 	int		target;
-// 	int		a_min;
-// 	int		a_max;
-
-// 	target = 0;
-// 	check_min_and_max_diff(&min_pos_diff, &max_diff, stack_a, stack_b);
-// 	find_min_and_max(&a_min, &a_max, *stack_a);
-// 	if (max_diff > 0)
-// 		target = min_pos_diff + (*stack_b)->sort_index;
-// 	else if (max_diff < 0)
-// 		target = a_min;
-// 	return (target);
-// }
-
-// void	get_cost(t_stack **stack_a, t_stack **stack_b)
-// {
-// 	int		len_b;
-// 	t_stack	*temp_b;
-// 	int		back_moves;
-// 	int		target_pos;
-
-// 	temp_b = *stack_b;
-// 	len_b = stack_len(*stack_b);
-// 	while (temp_b)
-// 	{
-// 		temp_b->cost_b = temp_b->current_pos;
-// 		if (temp_b->cost_b > len_b / 2)
-// 			temp_b->cost_b = (temp_b->current_pos - len_b);
-// 		target_pos = get_target_pos(stack_a, &temp_b);
-// 		back_moves = count_backward_moves(*stack_a, target_pos);
-// 		temp_b->cost_a = count_forward_moves(*stack_a, target_pos);
-// 		if (back_moves < temp_b->cost_a)
-// 			temp_b->cost_a = back_moves * -1;
-// 		temp_b = temp_b->next;
-// 	}
-// }
-
-// void	adjust(int cheapest_pos, t_stack **a, t_stack **b)
-// {
-// 	t_stack	*temp;
-
-// 	temp = *b;
-// 	while (temp->current_pos != cheapest_pos)
-// 		temp = temp->next;
-// 	if ((temp->cost_a < 0) && (temp->cost_b < 0))
-// 		rrr(a, b);
-// 		// reverse_rotate_both(a, b, temp->cost_a, temp->cost_b);
-// 	else if ((temp->cost_a > 0) && (temp->cost_b > 0))
-// 		rr(a, b);
-// 		// rotate_both(a, b, temp->cost_a, temp->cost_b);
-// 	else if (temp->cost_b >= 0 && temp->cost_a <= 0)
-// 	{
-// 		rb(b);
-// 		rra(a);
-// 		// rotate(b, "rb", temp->cost_b);
-// 		// reverse_rotate(a, "rra", temp->cost_a);
-// 	}
-// 	else if (temp->cost_b <= 0 && temp->cost_a >= 0)
-// 	{
-// 		rrb(b);
-// 		ra(a);
-// 		// reverse_rotate(b, "rrb", temp->cost_b);
-// 		// rotate(a, "ra", temp->cost_a);
-// 	}
-// }
-
-// void	rearrange_a(t_stack **stack, int point)
-// {
-// 	int	ra_size;
-// 	int	rra_size;
-
-// 	ra_size = count_forward_moves(*stack, point);
-// 	rra_size = count_backward_moves(*stack, point);
-// 	if (ra_size == 0)
-// 		return ;
-// 	else if (ra_size > rra_size)
-// 		while (rra_size--)
-// 			rra(stack);
-// 			// reverse_rotate(stack, "rra", -1);
-// 	else
-// 		while (ra_size--)
-// 			ra(stack);
-// 			// rotate(stack, "ra", 1);
-// }
-
-// void	move_to_a(t_stack **stack_a, t_stack **stack_b)
-// {
-// 	int	cheapest_elem;
-
-// 	while (*stack_b)
-// 	{
-// 		assign_elem_position(stack_a, stack_b);
-// 		get_cost(stack_a, stack_b);
-// 		cheapest_elem = find_cheapest(stack_b);
-// 		adjust(cheapest_elem, stack_a, stack_b);
-// 		pa(stack_a, stack_b);
-// 	}
-// }
-
-// void	push_swap(t_stack **stack_a)
-// {
-// 	t_stack	*stack_b;
-
-// 	stack_b = NULL;
-// 	if (stack_len(*stack_a) > 3)
-// 	{
-// 		move_to_b_by_median(stack_a, &stack_b);
-// 		sort_three(stack_a);
-// 	}
-// 	move_to_a(stack_a, &stack_b);
-// 	rearrange_a(stack_a, 0);
-// 	free_stack(stack_b);
-// 	return ;
-// }
-
-
-
-
-
-
-

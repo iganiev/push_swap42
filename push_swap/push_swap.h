@@ -6,7 +6,7 @@
 /*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:44:15 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/18 23:15:15 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:27:14 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ typedef struct s_stack
 	int				target;
 	int				price;
 	int				index;
-	// int				data;
-	// int				current_pos;
-	// int				cost_a;
-	// int				cost_b;
+	int				data;
+	int				current_pos;
+	int				cost_a;
+	int				cost_b;
 	int				sort_index;
 	int				content;
 	struct s_stack	*next;

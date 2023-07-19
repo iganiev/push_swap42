@@ -6,7 +6,7 @@
 /*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:42:18 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/19 01:19:20 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:24:06 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
     // quick_sort(&stack_a, &stack_b);
     // sort_more(&stack_a);
     // sort_three(&stack_a);
-    ft_printf("After sorting:\n");
-    print_stack(stack_a);
+    // ft_printf("After sorting:\n");
+    // print_stack(stack_a);
     free_stack(stack_a);
     free(int_array);
     return 0;
