@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iganiev <g.ibrogim98@gmail.com>            +#+  +:+       +#+        */
+/*   By: iganiev <iganiev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 15:53:42 by iganiev           #+#    #+#             */
-/*   Updated: 2023/07/15 15:38:17 by iganiev          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:51:28 by iganiev          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,40 @@ void	push_smallest_to_b(t_stack **stack_a, t_stack **stack_b)
 			rra(stack_a);
 	}
 	pb(stack_a, stack_b);
+}
+
+void	sort_int_array(int **matrix, int len)
+{
+	int	i;
+	int	temp;
+	int	*new;
+
+	new = *matrix;
+	i = 0;
+	while (i < (len - 1))
+	{
+		if (new[i] > new[i + 1])
+		{
+			temp = new[i];
+			new[i] = new[i + 1];
+			new[i + 1] = temp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	*matrix = new;
+}
+
+int	is_sorted(const t_stack *stack)
+{
+	if (stack == NULL)
+		return (1);
+	while (stack->next != NULL)
+	{
+		if (stack->content > stack->next->content)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
 }
